@@ -14,11 +14,8 @@ Applikationen använder [Leaflet](https://leafletjs.com/) och tile-data från Op
 2. Kör `./gradlew assembleDebug` i projektets rotmapp för att bygga en debugversion av appen.
 3. Installera APK-filen som genereras i `app/build/outputs/apk/debug` på din Android-enhet.
 
-## Karta i appen
 
 Map-skärmen laddar `index.html` i en WebView. Där kan du markera din rutt och se den sammanlagda sträckan direkt.
-
-## Auth & Onboarding
 
 Appen använder Credential Manager för inloggning (lösenord och passkeys). En enkel onboarding-skärm visas första gången appen startas och lagras i DataStore.
 
