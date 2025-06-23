@@ -5,10 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.viewinterop.AndroidView
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.icons.Icons
@@ -57,6 +58,15 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier) {
 @Composable
 fun MapScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text("Map placeholder", style = MaterialTheme.typography.bodyLarge)
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    webViewClient = WebViewClient()
+                    settings.javaScriptEnabled = true
+                    loadUrl("file:///android_asset/index.html")
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
