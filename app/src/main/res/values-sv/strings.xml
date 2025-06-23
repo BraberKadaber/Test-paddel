@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Paddelrutt</string>
+    <string name="auth_sign_in">Logga in</string>
+</resources>
