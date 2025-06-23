@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paddelrutt</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-sA+z0p1I2hHO4ab+rOA9n2wmtS3745MNiWg/Ts50mTI=" crossorigin=""/>
+    <style>
+        #map { height: 80vh; width: 100%; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .info { padding: 10px; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="info">
+    <p>Klicka på kartan för att lägga till punkter på din rutt.</p>
+    <p>Total sträcka: <span id="distance">0</span> km</p>
+    <button id="reset">Återställ</button>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44c=" crossorigin=""></script>
+<script>
+    const map = L.map('map').setView([59.3293, 18.0686], 10); // Stockholm som start
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    let points = [];
+    let polyline = L.polyline([], { color: 'blue' }).addTo(map);
+
+    function haversineDistance(latlng1, latlng2) {
+        const R = 6371; // Jordens radie i km
+        const toRad = deg => deg * Math.PI / 180;
+        const dLat = toRad(latlng2.lat - latlng1.lat);
+        const dLon = toRad(latlng2.lng - latlng1.lng);
+        const lat1 = toRad(latlng1.lat);
+        const lat2 = toRad(latlng2.lat);
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    function updateDistance() {
+        let dist = 0;
+        for (let i = 1; i < points.length; i++) {
+            dist += haversineDistance(points[i-1], points[i]);
+        }
+        document.getElementById('distance').textContent = dist.toFixed(2);
+    }
+
+    map.on('click', function(e) {
+        points.push(e.latlng);
+        polyline.setLatLngs(points);
+        L.marker(e.latlng).addTo(map);
+        updateDistance();
+    });
+
+    document.getElementById('reset').addEventListener('click', function() {
+        points = [];
+        polyline.setLatLngs(points);
+        document.getElementById('distance').textContent = '0';
+        map.eachLayer(layer => {
+            if (layer instanceof L.Marker && layer !== polyline) {
+                map.removeLayer(layer);
+            }
+        });
+    });
+</script>
+</body>
+</html>
