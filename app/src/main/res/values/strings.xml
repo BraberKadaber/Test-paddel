@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Paddelrutt</string>
+    <string name="app_name">PaddleRoute</string>
+    <string name="auth_sign_in">Sign in</string>
 </resources>

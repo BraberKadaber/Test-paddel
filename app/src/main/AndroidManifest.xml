@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.paddel">
 
-    <application
+    <application android:name=".PaddleApp"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"

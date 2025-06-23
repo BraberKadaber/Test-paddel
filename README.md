@@ -1,6 +1,6 @@
 # Paddelrutt-app
 
-Det här projektet är nu ett enkelt Android-projekt som visar samma kartfunktioner i en WebView. Du kan rita ut din paddelrutt och se den totala sträckan.
+En enkel Android-app byggd med Jetpack Compose. Du kan rita ut din paddelrutt och se den totala sträckan. Nu finns även grunderna för modern autentisering och onboarding.
 
 ## Kom igång (Webbversion)
 
@@ -11,5 +11,17 @@ Applikationen använder [Leaflet](https://leafletjs.com/) och tile-data från Op
 ## Bygg Android-applikationen
 
 1. Se till att du har Android Studio eller Android SDK och Gradle installerat.
-2. Kör `gradle assembleDebug` i projektets rotmapp för att bygga en debugversion av appen.
+2. Kör `./gradlew assembleDebug` i projektets rotmapp för att bygga en debugversion av appen.
 3. Installera APK-filen som genereras i `app/build/outputs/apk/debug` på din Android-enhet.
+
+## Auth & Onboarding
+
+Appen använder Credential Manager för inloggning (lösenord och passkeys). En enkel onboarding-skärm visas första gången appen startas och lagras i DataStore.
+
+## Nordic Safety Overlay
+
+Kodbasen innehåller ett ramverk för att hämta data från SMHI och ViVa som ska kunna visas ovanpå kartan som vind- och vatteninformation.
+
+## Stroke Analysis
+
+En modul för att analysera paddeltag via mobilens sensorer finns som grund. Resultatet kommer att ge feedback på kadens och effektivitet.
